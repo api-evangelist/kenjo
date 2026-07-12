@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Authentication", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Log in an API token.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/auth/login",
+            "auth": { "type": "none" },
+            "body": { "type": "json", "data": "{ \"apiKey\": \"{{apiKey}}\" }" }
+          },
+          "docs": "Exchanges a Kenjo API key for a bearer token."
+        },
+        {
+          "info": { "name": "Log out an API token.", "type": "http" },
+          "http": { "method": "POST", "url": "https://api.kenjo.io/api/v1/auth/logout" },
+          "docs": "Invalidates the current bearer token."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Employees", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List employees.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/employees" },
+          "docs": "Returns a paginated list of employees."
+        },
+        {
+          "info": { "name": "Create a new employee.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/employees",
+            "body": { "type": "json", "data": "{ \"email\": \"new.hire@example.com\", \"firstName\": \"New\", \"lastName\": \"Hire\" }" }
+          },
+          "docs": "Creates a new employee (deactivated by default)."
+        },
+        {
+          "info": { "name": "Get an employee.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId",
+            "params": [
+              { "name": "employeeId", "value": "", "type": "path", "description": "The employee id." }
+            ]
+          },
+          "docs": "Returns all sections for a given employee id."
+        },
+        {
+          "info": { "name": "List employee accounts.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/employees/accounts" },
+          "docs": "Returns email, external id, language, and activation status per employee."
+        },
+        {
+          "info": { "name": "Update employee work section.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/works",
+            "params": [
+              { "name": "employeeId", "value": "", "type": "path", "description": "The employee id." }
+            ],
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Updates the work section for a given employee id."
+        },
+        {
+          "info": { "name": "Activate an employee.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/activate",
+            "params": [
+              { "name": "employeeId", "value": "", "type": "path", "description": "The employee id." }
+            ]
+          },
+          "docs": "Activates an employee."
+        },
+        {
+          "info": { "name": "Deactivate an employee.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/deactivate",
+            "params": [
+              { "name": "employeeId", "value": "", "type": "path", "description": "The employee id." }
+            ]
+          },
+          "docs": "Deactivates an employee."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Attendance", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List attendances.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/attendances" },
+          "docs": "Returns a list of attendance entries."
+        },
+        {
+          "info": { "name": "Create an attendance.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/attendances",
+            "body": { "type": "json", "data": "{ \"email\": \"employee@example.com\", \"date\": \"2026-07-11\" }" }
+          },
+          "docs": "Creates a new attendance entry by userId, email, or externalId."
+        },
+        {
+          "info": { "name": "Track an attendance entry.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/attendances/track-time",
+            "body": { "type": "json", "data": "{ \"email\": \"employee@example.com\", \"dateTime\": \"2026-07-11T09:00:00Z\" }" }
+          },
+          "docs": "Tracks a clock-in/clock-out by employee identifier and dateTime."
+        },
+        {
+          "info": { "name": "List expected time.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/attendances/expected-time",
+            "params": [
+              { "name": "from", "value": "2026-07-01", "type": "query", "description": "Start date." },
+              { "name": "to", "value": "2026-07-31", "type": "query", "description": "End date." }
+            ]
+          },
+          "docs": "Returns expected working time per user for a date range."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Time Off", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List time-off requests.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/time-off-requests" },
+          "docs": "Returns a list of time-off requests."
+        },
+        {
+          "info": { "name": "Create a time-off request.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/time-off-requests",
+            "body": { "type": "json", "data": "{ \"timeOffTypeId\": \"\", \"from\": \"2026-08-01\", \"to\": \"2026-08-05\" }" }
+          },
+          "docs": "Creates a time-off request."
+        },
+        {
+          "info": { "name": "List time-off types.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/time-off-types" },
+          "docs": "Returns a list of time-off types."
+        },
+        {
+          "info": { "name": "Set a time-off balance.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/time-off/set-balance/:timeOffTypeId/:employeeId",
+            "params": [
+              { "name": "timeOffTypeId", "value": "", "type": "path", "description": "The time-off type id." },
+              { "name": "employeeId", "value": "", "type": "path", "description": "The employee id." }
+            ],
+            "body": { "type": "json", "data": "{ \"balance\": 25 }" }
+          },
+          "docs": "Sets an employee's balance for a given time-off type."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Documents", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List company documents.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/documents/company" },
+          "docs": "Returns a paginated list of company documents."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Compensation", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List contracts.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/compensation/contracts" },
+          "docs": "Returns a list of contracts."
+        },
+        {
+          "info": { "name": "List salaries.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/compensation/salaries" },
+          "docs": "Returns a list of salaries."
+        },
+        {
+          "info": { "name": "List additional payments.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/compensation/additional-payments" },
+          "docs": "Returns a list of additional payments."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Organization", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List companies.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/companies" },
+          "docs": "Returns a list of companies."
+        },
+        {
+          "info": { "name": "List offices.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/offices" },
+          "docs": "Returns a list of offices."
+        },
+        {
+          "info": { "name": "List departments.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/departments" },
+          "docs": "Returns a list of departments."
+        },
+        {
+          "info": { "name": "List teams.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/teams" },
+          "docs": "Returns a list of teams."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Recruiting", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List positions.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/recruiting/positions" },
+          "docs": "Returns a list of job openings, including public positions for a custom career site."
+        },
+        {
+          "info": { "name": "List candidates.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.kenjo.io/api/v1/recruiting/candidates" },
+          "docs": "Returns a list of candidates."
+        },
+        {
+          "info": { "name": "Create a candidate.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates",
+            "body": { "type": "json", "data": "{ \"firstName\": \"Jane\", \"lastName\": \"Doe\", \"email\": \"jane.doe@example.com\" }" }
+          },
+          "docs": "Creates a new candidate."
+        }
+      ]
+    }
+  ]
+}

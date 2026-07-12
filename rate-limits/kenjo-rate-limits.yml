@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Kenjo
+providerId: kenjo
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Human Resources
+- HRIS
+- Employee Management
+- Rate Limiting
+- Quotas
+description: >-
+  Kenjo does not publish fixed numeric rate limits for its REST API in the public
+  reference. Practical throughput is governed by the gated access model rather
+  than by an advertised per-minute request cap: the API is a Connect-plan
+  capability that must be activated per account (sandbox or production) by Kenjo
+  Customer Success, and every request must carry a valid bearer token obtained
+  from POST /auth/login. A missing, invalid, or expired token returns 401
+  UNAUTHORIZED. Bulk reads (employees, attendances, expected-time, documents,
+  time-off requests) are paginated, so large syncs should page through results
+  and apply client-side backoff.
+notes: >-
+  No numeric per-account or per-endpoint limits are documented as of the review
+  date. Confirm any concurrency, throughput, or token-expiry limits with Kenjo
+  Customer Success when API access is activated.
+sources:
+- https://kenjo.readme.io/reference
+- https://kenjo.readme.io/reference/generate-the-api-key
+- https://help.kenjo.io/en/support/solutions/articles/60000703392-api-integration
+responseCodes:
+  unauthorized: 401
+  throttled: 429
+limits:
+- name: REST API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for the Kenjo API.
+- name: Pagination
+  scope: endpoint
+  metric: items
+  limit: configurable via page and limit
+  notes: List endpoints are paginated; page through large result sets rather than requesting everything at once.
+- name: Token Validity
+  scope: token
+  metric: bearer token
+  limit: expires
+  notes: Bearer tokens from POST /auth/login expire; an expired token returns 401 and must be re-issued.
+policies:
+- name: Entitlement Gating
+  description: API access is a Connect-plan capability activated per account by Kenjo Customer Success, which bounds who can call the API before any rate limit applies.
+- name: Authentication Required
+  description: Every request must include a valid bearer token in the Authorization header; missing/invalid/expired tokens return 401 UNAUTHORIZED.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After if a 429 is returned.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

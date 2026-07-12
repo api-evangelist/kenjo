@@ -1,0 +1,91 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Kenjo
+providerId: kenjo
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Human Resources
+- HRIS
+- Employee Management
+- HR Software
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Kenjo spend. Kenjo is per-employee-per-month HR SaaS billed
+  monthly or annually across Starter, Growth, and Connect tiers, with cost
+  scaling on headcount and enabled modules. The API is not separately metered:
+  it is an entitlement of the top-tier Connect plan (and requires Customer
+  Success activation), so the marginal cost of API usage is effectively zero
+  once you hold Connect. The dominant cost driver is therefore seat count times
+  the Connect per-employee rate, not API call volume. Annual billing carries
+  roughly a 10% discount over monthly.
+notes: >-
+  Per-employee rates are quote/calculator-based on Kenjo's side (Connect is
+  "book a demo"); reconcile the actual rate and billing currency (EUR) with
+  Kenjo Sales. There is no usage-metered API line item to optimize - cost
+  optimization is about right-sizing seats and choosing annual over monthly.
+sources:
+- https://www.kenjo.io/pricing
+- https://www.kenjo.io/legal/api
+- https://kenjo.readme.io/reference
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Kenjo
+serviceCategory: Human Resources Software
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly or Annual
+  billingCurrency: EUR
+  chargeCategories:
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Kenjo HR
+  ServiceCategory: Human Resources Software
+  ProviderName: Kenjo
+  PublisherName: Kenjo
+  InvoiceIssuerName: Kenjo
+  BillingCurrency: EUR
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: active_employees
+  description: Billable employees (seats) per month; the primary cost driver across all tiers.
+  unit: employees
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: plan_tier
+  description: Subscription tier (Starter, Growth, Connect) determining per-employee rate and module access, including API entitlement.
+  unit: tier
+  aggregation: max
+  dimensions:
+  - account
+- name: api_calls
+  description: Kenjo API requests. Not separately billed; included with the Connect plan entitlement (informational only).
+  unit: requests
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Track billable seat count and plan tier; API usage carries no separate charge, so watch headcount and tier rather than call volume.
+- name: Allocation
+  description: Attribute the Kenjo subscription to HR/People Ops cost centers; if the API drives an integration for another team, note the Connect requirement in that team's tooling budget.
+- name: Optimization
+  description: Right-size seats to active employees, prefer annual billing for the discount, and confirm you actually need Connect (only take it if API/integrations or its other exclusive features are required).
+- name: Accountability
+  description: Assign an owner for the Kenjo subscription; review seat count and tier against actual usage each renewal.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

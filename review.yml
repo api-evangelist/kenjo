@@ -1,0 +1,159 @@
+aid: kenjo
+name: Kenjo
+review:
+  question: Does Kenjo expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Kenjo's documented API surface
+    (kenjo.readme.io) is entirely request/response REST over HTTPS, secured
+    with a bearer token. There is no server-push transport - no WebSocket
+    (ws:// or wss://), no Server-Sent Events, and no publicly documented
+    webhook/event stream - on Kenjo's own API to model. Employees,
+    attendances, time-off requests, documents, compensation, org structure,
+    and recruiting are all pulled or pushed synchronously over REST.
+findings:
+  summary: |
+    Kenjo does not publish a documented public WebSocket API. Kenjo is an
+    all-in-one HR (HRIS) platform. Its public API is a REST API documented at
+    kenjo.readme.io, with a production base of https://api.kenjo.io/api/v1 and
+    a sandbox base of https://sandbox-api.kenjo.io/api/v1. Authentication is a
+    bearer token: you exchange a generated API key via POST /auth/login and
+    send the token in the Authorization header (a missing/invalid/expired
+    token returns 401 UNAUTHORIZED). Every documented resource - employees and
+    their profile sections, attendances and time tracking, time-off requests
+    and balances, company documents, compensation/contracts/salaries,
+    organizational structure (companies, offices, departments, teams, areas,
+    calendars), and recruiting (positions, candidates, applications) - is
+    plain request/response REST. No realtime, bidirectional, or streaming
+    WebSocket endpoint is documented anywhere on Kenjo's API.
+  accessModel: |
+    Access is gated, not open self-service. The API is a Connect-plan (top
+    tier) capability and must be activated for a given account (sandbox or
+    production) by Kenjo's Customer Success team. Customers then generate API
+    keys in the web app under Settings > Integrations > API. This is a
+    partner/customer API rather than a fully public developer program, but the
+    endpoint reference itself is publicly readable at kenjo.readme.io.
+  endpointsModeled: false
+  endpointsNote: |
+    The paths and HTTP methods captured in the OpenAPI were taken from Kenjo's
+    published API reference (kenjo.readme.io) and are not fabricated. Request
+    and response body schemas in the OpenAPI are modeled representations where
+    Kenjo does not publish full field-level schemas; the operations, paths, and
+    methods themselves are real and documented.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.kenjo.io/api/v1
+      documented: true
+      note: Production REST API. Sandbox base is https://sandbox-api.kenjo.io/api/v1.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Kenjo's API reference as of the review date.
+    - protocol: Webhook
+      scheme: https
+      documented: false
+      note: No publicly documented outbound webhook/event API on Kenjo's own REST surface as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.kenjo.io/api/v1/auth/login
+    - POST   https://api.kenjo.io/api/v1/auth/logout
+    - GET    https://api.kenjo.io/api/v1/user-accounts
+    - GET    https://api.kenjo.io/api/v1/employees
+    - POST   https://api.kenjo.io/api/v1/employees
+    - GET    https://api.kenjo.io/api/v1/employees/{employeeId}
+    - GET    https://api.kenjo.io/api/v1/employees/accounts
+    - GET    https://api.kenjo.io/api/v1/employees/personals
+    - GET    https://api.kenjo.io/api/v1/employees/works
+    - GET    https://api.kenjo.io/api/v1/employees/work-schedules
+    - GET    https://api.kenjo.io/api/v1/employees/addresses
+    - GET    https://api.kenjo.io/api/v1/employees/financials
+    - GET    https://api.kenjo.io/api/v1/employees/homes
+    - GET    https://api.kenjo.io/api/v1/employees/emergencies
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/accounts
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/personals
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/works
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/work-schedules
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/addresses
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/financials
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/homes
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/emergencies
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/activate
+    - PUT    https://api.kenjo.io/api/v1/employees/{employeeId}/deactivate
+    - GET    https://api.kenjo.io/api/v1/attendances
+    - POST   https://api.kenjo.io/api/v1/attendances
+    - GET    https://api.kenjo.io/api/v1/attendances/{attendanceId}
+    - PUT    https://api.kenjo.io/api/v1/attendances/{attendanceId}
+    - DELETE https://api.kenjo.io/api/v1/attendances/{attendanceId}
+    - POST   https://api.kenjo.io/api/v1/attendances/track-time
+    - GET    https://api.kenjo.io/api/v1/attendances/categories
+    - GET    https://api.kenjo.io/api/v1/attendances/expected-time
+    - GET    https://api.kenjo.io/api/v1/time-off-requests
+    - POST   https://api.kenjo.io/api/v1/time-off-requests
+    - POST   https://api.kenjo.io/api/v1/time-off-requests/processed
+    - GET    https://api.kenjo.io/api/v1/time-off-types
+    - GET    https://api.kenjo.io/api/v1/time-off-status
+    - PUT    https://api.kenjo.io/api/v1/time-off/set-balance/{timeOffTypeId}/{employeeId}
+    - GET    https://api.kenjo.io/api/v1/documents/company
+    - GET    https://api.kenjo.io/api/v1/compensation/contracts
+    - GET    https://api.kenjo.io/api/v1/compensation/contract-types
+    - GET    https://api.kenjo.io/api/v1/compensation/salaries
+    - GET    https://api.kenjo.io/api/v1/compensation/additional-payments
+    - GET    https://api.kenjo.io/api/v1/compensation/additional-payment-types
+    - GET    https://api.kenjo.io/api/v1/companies
+    - GET    https://api.kenjo.io/api/v1/offices
+    - POST   https://api.kenjo.io/api/v1/offices
+    - GET    https://api.kenjo.io/api/v1/offices/{id}
+    - PUT    https://api.kenjo.io/api/v1/offices/{id}
+    - DELETE https://api.kenjo.io/api/v1/offices/{id}
+    - GET    https://api.kenjo.io/api/v1/departments
+    - POST   https://api.kenjo.io/api/v1/departments
+    - GET    https://api.kenjo.io/api/v1/teams
+    - POST   https://api.kenjo.io/api/v1/teams
+    - GET    https://api.kenjo.io/api/v1/areas
+    - POST   https://api.kenjo.io/api/v1/areas
+    - GET    https://api.kenjo.io/api/v1/calendars
+    - GET    https://api.kenjo.io/api/v1/custom-fields
+    - GET    https://api.kenjo.io/api/v1/work-schedules/contracted-weekly-minutes
+    - GET    https://api.kenjo.io/api/v1/recruiting/positions
+    - GET    https://api.kenjo.io/api/v1/recruiting/candidates
+    - POST   https://api.kenjo.io/api/v1/recruiting/candidates
+    - GET    https://api.kenjo.io/api/v1/recruiting/candidates/{candidateId}
+    - PUT    https://api.kenjo.io/api/v1/recruiting/candidates/{candidateId}
+    - POST   https://api.kenjo.io/api/v1/recruiting/candidates/{candidateId}/attachment
+    - GET    https://api.kenjo.io/api/v1/recruiting/candidates/{candidateId}/documents
+    - GET    https://api.kenjo.io/api/v1/recruiting/applications
+    - POST   https://api.kenjo.io/api/v1/recruiting/applications/position/{positionId}/candidate/{candidateId}
+    - PUT    https://api.kenjo.io/api/v1/recruiting/applications/position/{positionId}/candidate/{candidateId}
+sources:
+  - url: https://www.kenjo.io/legal/api
+    type: Documentation
+    note: Official API landing page; links to the ReadMe reference and support@kenjo.io.
+  - url: https://kenjo.readme.io/reference
+    type: APIReference
+    note: Full REST API reference (ReadMe). Bearer auth, all request/response REST.
+  - url: https://kenjo.readme.io/reference/generate-the-api-key
+    type: Documentation
+    note: API key generation; keys need a unique alias and are shown once.
+  - url: https://kenjo.readme.io/reference/post_attendances
+    type: APIReference
+    note: Confirms sandbox base https://sandbox-api.kenjo.io/api/v1 and Bearer token auth.
+  - url: https://help.kenjo.io/en/support/solutions/articles/60000703392-api-integration
+    type: Documentation
+    note: API activation requested from Customer Success; keys generated in Settings > Integrations > API.
+  - url: https://help.kenjo.io/en/support/solutions/articles/60000715727-how-can-i-use-kenjo-api-to-build-my-custom-career-site-
+    type: Documentation
+    note: Public recruiting positions endpoint used to build custom career sites.
+  - url: https://www.kenjo.io/pricing
+    type: Pricing
+    note: APIs and integrations are a Connect-plan capability.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Kenjo's own public API is
+    request/response REST secured with a bearer token, and no server-push
+    transport (WebSocket, SSE, or documented webhook) is published, so no
+    AsyncAPI document was created.

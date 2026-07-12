@@ -1,0 +1,321 @@
+{
+  "info": {
+    "name": "Kenjo API",
+    "description": "Kenjo all-in-one HR (HRIS) REST API. Base URL: https://api.kenjo.io/api/v1 (production) or https://sandbox-api.kenjo.io/api/v1 (sandbox). Access is a Connect-plan capability activated by Kenjo Customer Success. Exchange an API key via POST /auth/login for a bearer token, then send it on every request.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{bearerToken}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.kenjo.io/api/v1", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" },
+    { "key": "bearerToken", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Log in an API token",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"apiKey\": \"{{apiKey}}\"\n}" },
+            "url": { "raw": "{{baseUrl}}/auth/login", "host": ["{{baseUrl}}"], "path": ["auth", "login"] },
+            "description": "Exchanges a Kenjo API key for a bearer token."
+          }
+        },
+        {
+          "name": "Log out an API token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/auth/logout", "host": ["{{baseUrl}}"], "path": ["auth", "logout"] },
+            "description": "Invalidates the current bearer token."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "List employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/employees", "host": ["{{baseUrl}}"], "path": ["employees"] },
+            "description": "Returns a paginated list of employees."
+          }
+        },
+        {
+          "name": "Create a new employee",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"new.hire@example.com\",\n  \"firstName\": \"New\",\n  \"lastName\": \"Hire\",\n  \"externalId\": \"EXT-123\"\n}" },
+            "url": { "raw": "{{baseUrl}}/employees", "host": ["{{baseUrl}}"], "path": ["employees"] },
+            "description": "Creates a new employee (deactivated by default)."
+          }
+        },
+        {
+          "name": "Get an employee",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/employees/:employeeId", "host": ["{{baseUrl}}"], "path": ["employees", ":employeeId"] },
+            "description": "Returns all sections for a given employee id."
+          }
+        },
+        {
+          "name": "List employee accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/employees/accounts", "host": ["{{baseUrl}}"], "path": ["employees", "accounts"] },
+            "description": "Returns email, external id, language, and activation status per employee."
+          }
+        },
+        {
+          "name": "Update employee work section",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/employees/:employeeId/works", "host": ["{{baseUrl}}"], "path": ["employees", ":employeeId", "works"] },
+            "description": "Updates the work section for a given employee id."
+          }
+        },
+        {
+          "name": "Activate an employee",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/employees/:employeeId/activate", "host": ["{{baseUrl}}"], "path": ["employees", ":employeeId", "activate"] },
+            "description": "Activates an employee."
+          }
+        },
+        {
+          "name": "Deactivate an employee",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/employees/:employeeId/deactivate", "host": ["{{baseUrl}}"], "path": ["employees", ":employeeId", "deactivate"] },
+            "description": "Deactivates an employee."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance",
+      "item": [
+        {
+          "name": "List attendances",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/attendances", "host": ["{{baseUrl}}"], "path": ["attendances"] },
+            "description": "Returns a list of attendance entries."
+          }
+        },
+        {
+          "name": "Create an attendance",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"employee@example.com\",\n  \"date\": \"2026-07-11\",\n  \"startTime\": \"2026-07-11T09:00:00Z\",\n  \"endTime\": \"2026-07-11T17:00:00Z\"\n}" },
+            "url": { "raw": "{{baseUrl}}/attendances", "host": ["{{baseUrl}}"], "path": ["attendances"] },
+            "description": "Creates a new attendance entry by userId, email, or externalId."
+          }
+        },
+        {
+          "name": "Track an attendance entry",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"employee@example.com\",\n  \"dateTime\": \"2026-07-11T09:00:00Z\"\n}" },
+            "url": { "raw": "{{baseUrl}}/attendances/track-time", "host": ["{{baseUrl}}"], "path": ["attendances", "track-time"] },
+            "description": "Tracks a clock-in/clock-out by employee identifier and dateTime."
+          }
+        },
+        {
+          "name": "List expected time",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/attendances/expected-time?from=2026-07-01&to=2026-07-31", "host": ["{{baseUrl}}"], "path": ["attendances", "expected-time"], "query": [{ "key": "from", "value": "2026-07-01" }, { "key": "to", "value": "2026-07-31" }] },
+            "description": "Returns expected working time per user for a date range."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Time Off",
+      "item": [
+        {
+          "name": "List time-off requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/time-off-requests", "host": ["{{baseUrl}}"], "path": ["time-off-requests"] },
+            "description": "Returns a list of time-off requests."
+          }
+        },
+        {
+          "name": "Create a time-off request",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"employeeId\": \"\",\n  \"timeOffTypeId\": \"\",\n  \"from\": \"2026-08-01\",\n  \"to\": \"2026-08-05\"\n}" },
+            "url": { "raw": "{{baseUrl}}/time-off-requests", "host": ["{{baseUrl}}"], "path": ["time-off-requests"] },
+            "description": "Creates a time-off request."
+          }
+        },
+        {
+          "name": "List time-off types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/time-off-types", "host": ["{{baseUrl}}"], "path": ["time-off-types"] },
+            "description": "Returns a list of time-off types."
+          }
+        },
+        {
+          "name": "Set a time-off balance",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"balance\": 25\n}" },
+            "url": { "raw": "{{baseUrl}}/time-off/set-balance/:timeOffTypeId/:employeeId", "host": ["{{baseUrl}}"], "path": ["time-off", "set-balance", ":timeOffTypeId", ":employeeId"] },
+            "description": "Sets an employee's balance for a given time-off type."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Documents",
+      "item": [
+        {
+          "name": "List company documents",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/documents/company", "host": ["{{baseUrl}}"], "path": ["documents", "company"] },
+            "description": "Returns a paginated list of company documents."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Compensation",
+      "item": [
+        {
+          "name": "List contracts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/compensation/contracts", "host": ["{{baseUrl}}"], "path": ["compensation", "contracts"] },
+            "description": "Returns a list of contracts."
+          }
+        },
+        {
+          "name": "List salaries",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/compensation/salaries", "host": ["{{baseUrl}}"], "path": ["compensation", "salaries"] },
+            "description": "Returns a list of salaries."
+          }
+        },
+        {
+          "name": "List additional payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/compensation/additional-payments", "host": ["{{baseUrl}}"], "path": ["compensation", "additional-payments"] },
+            "description": "Returns a list of additional payments."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Organization",
+      "item": [
+        {
+          "name": "List companies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/companies", "host": ["{{baseUrl}}"], "path": ["companies"] },
+            "description": "Returns a list of companies."
+          }
+        },
+        {
+          "name": "List offices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/offices", "host": ["{{baseUrl}}"], "path": ["offices"] },
+            "description": "Returns a list of offices."
+          }
+        },
+        {
+          "name": "List departments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/departments", "host": ["{{baseUrl}}"], "path": ["departments"] },
+            "description": "Returns a list of departments."
+          }
+        },
+        {
+          "name": "List teams",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/teams", "host": ["{{baseUrl}}"], "path": ["teams"] },
+            "description": "Returns a list of teams."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recruiting",
+      "item": [
+        {
+          "name": "List positions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/recruiting/positions", "host": ["{{baseUrl}}"], "path": ["recruiting", "positions"] },
+            "description": "Returns a list of job openings, including public positions for a custom career site."
+          }
+        },
+        {
+          "name": "List candidates",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/recruiting/candidates", "host": ["{{baseUrl}}"], "path": ["recruiting", "candidates"] },
+            "description": "Returns a list of candidates."
+          }
+        },
+        {
+          "name": "Create a candidate",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"email\": \"jane.doe@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/recruiting/candidates", "host": ["{{baseUrl}}"], "path": ["recruiting", "candidates"] },
+            "description": "Creates a new candidate."
+          }
+        }
+      ]
+    }
+  ]
+}

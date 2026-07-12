@@ -1,0 +1,129 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Kenjo
+providerId: kenjo
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Human Resources
+- HRIS
+- Employee Management
+- HR Software
+- Plans
+description: >-
+  Kenjo is sold as per-employee-per-month SaaS in three tiers - Starter, Growth,
+  and Connect - billed monthly or annually (annual carries roughly a 10%
+  discount). Pricing scales with headcount and the modules enabled. The official
+  pricing page renders prices through a headcount calculator rather than fixed
+  numbers; the figures below are approximate per-employee-per-month rates
+  reported by third-party software directories (Starter around EUR 5-6, Growth
+  around EUR 9-10) and should be reconciled against a live Kenjo quote. The API
+  and integrations are NOT a general add-on - they are a capability of the
+  top-tier Connect plan and additionally require activation by Kenjo Customer
+  Success. The API itself has no separately metered fee; access is entitlement-
+  based via the plan.
+notes: >-
+  Starter and Growth per-employee prices are third-party estimates, not scraped
+  from Kenjo's own page (which shows a calculator). Connect is quote-based
+  ("book a demo"). Verify all numbers and the API entitlement with Kenjo Sales
+  during reconciliation.
+sources:
+- https://www.kenjo.io/pricing
+- https://www.kenjo.io/legal/api
+- https://kenjo.readme.io/reference
+- https://help.kenjo.io/en/support/solutions/articles/60000703392-api-integration
+plans:
+- id: kenjo-starter
+  name: Starter
+  type: paid
+  description: >-
+    Entry HR tier covering the employee database, absence and time-off
+    management, attendance and time tracking, document management, payroll
+    management, shift planning, standard workflows, and reporting. API access is
+    NOT included.
+  entries:
+  - label: Per Employee
+    name: starter_per_employee
+    type: flat
+    metric: employees
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: EUR
+    price: approx. 5-6 EUR per employee per month (third-party estimate; verify)
+    userMultiplied: true
+  elements:
+  - name: Employee Database
+  - name: Absence and Time-Off Management
+  - name: Attendance and Time Tracking
+  - name: Document Management
+  - name: Payroll Management
+  - name: Shift Planning
+  - name: Reporting
+  - name: API Access (not included)
+- id: kenjo-growth
+  name: Growth
+  type: paid
+  description: >-
+    Mid tier adding the Kiosk app, e-signature, advanced workflows, onboarding
+    and off-boarding, multi-office management, BI reports, custom profiles and
+    permissions, whistleblower channel, and telephone support on top of Starter.
+    API access is NOT included.
+  entries:
+  - label: Per Employee
+    name: growth_per_employee
+    type: flat
+    metric: employees
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: EUR
+    price: approx. 9-10 EUR per employee per month (third-party estimate; verify)
+    userMultiplied: true
+  elements:
+  - name: Everything in Starter
+  - name: Kiosk App
+  - name: E-Signature
+  - name: Advanced Workflows
+  - name: Onboarding and Off-boarding
+  - name: Multi-Office Management
+  - name: BI Reports
+  - name: Custom Profiles and Permissions
+  - name: API Access (not included)
+- id: kenjo-connect
+  name: Connect
+  type: enterprise
+  description: >-
+    Top tier (marked "most popular") that unlocks APIs and integrations, plus a
+    training tracker, bulk operations, labour-law non-compliance alerts, advanced
+    time-tracking automations, shift templates and availability, and hands-on
+    support and implementation. This is the plan required to use the Kenjo API,
+    which must additionally be activated by Customer Success. Priced by quote.
+  entries:
+  - label: Custom / Quote
+    name: connect_quote
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    currency: EUR
+    price: custom (book a demo)
+    userMultiplied: true
+  elements:
+  - name: Everything in Growth
+  - name: APIs and Integrations
+  - name: Training Tracker
+  - name: Bulk Operations
+  - name: Labour-Law Non-Compliance Alerts
+  - name: Advanced Time-Tracking Automations
+  - name: Shift Templates and Availability
+  - name: Hands-On Support and Implementation
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

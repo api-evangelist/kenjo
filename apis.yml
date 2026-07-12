@@ -1,0 +1,209 @@
+aid: kenjo
+url: https://raw.githubusercontent.com/api-evangelist/kenjo/refs/heads/main/apis.yml
+name: Kenjo
+kind: company
+description: Kenjo is an all-in-one human resources (HRIS) software platform for
+  small and mid-sized companies, with a strong focus on deskless and shift-based
+  teams. It covers the full employee lifecycle - employee database, attendance and
+  time tracking, absence and time-off management, document management, payroll and
+  compensation, shift planning, performance reviews, and recruiting. Kenjo exposes a
+  documented REST API (base https://api.kenjo.io/api/v1, sandbox
+  https://sandbox-api.kenjo.io/api/v1) that lets customers read and write employees,
+  attendances, time-off requests, company documents, compensation, org structure,
+  and recruiting data. API access is gated - it is available on Kenjo's top-tier
+  Connect plan and must be activated by the Kenjo Customer Success team, then keys
+  are generated in Settings > Integrations > API and exchanged for a bearer token.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Human Resources
+- HRIS
+- Employee Management
+- HR Software
+- Time Tracking
+- Absence Management
+- Payroll
+- Recruiting
+created: '2026-07-11'
+modified: '2026-07-11'
+specificationVersion: '0.19'
+apis:
+- aid: kenjo:kenjo-employees-api
+  name: Kenjo Employees API
+  tags:
+  - Employees
+  - Human Resources
+  - HRIS
+  - Employee Management
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/post_employees
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://www.kenjo.io/legal/api
+    type: Documentation
+  - url: https://kenjo.readme.io/reference/post_employees
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Create, list, and read employees and update their profile sections -
+    account, personal, work, work schedule, address, financial, home, and emergency
+    contact - plus activate and deactivate employees. New employees are created
+    deactivated by default. The core HRIS surface for keeping an external system of
+    record in sync with Kenjo.
+- aid: kenjo:kenjo-attendance-api
+  name: Kenjo Attendance API
+  tags:
+  - Attendance
+  - Time Tracking
+  - Employee Management
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/post_attendances
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://kenjo.readme.io/reference/post_attendances
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Record and manage attendance and time tracking - create, retrieve,
+    update, and delete attendance entries, track a clock-in/clock-out by user email
+    or external id, list attendance categories, and return expected working time per
+    user for a date range. Built for deskless and shift-based workforce time capture.
+- aid: kenjo:kenjo-time-off-api
+  name: Kenjo Time Off and Absences API
+  tags:
+  - Absence Management
+  - Time Off
+  - Leave
+  - Human Resources
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/post_time-off-requests
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://kenjo.readme.io/reference/post_time-off-requests
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Manage absences and time off - create time-off requests, create
+    pre-approved (processed) requests, list requests, list time-off types and
+    statuses, and set an employee's balance for a given time-off type. The absence
+    and leave management surface of the Kenjo HRIS.
+- aid: kenjo:kenjo-documents-api
+  name: Kenjo Documents API
+  tags:
+  - Documents
+  - Document Management
+  - Human Resources
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/get_documents-company
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://kenjo.readme.io/reference/get_documents-company
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Return a paginated list of company documents stored in Kenjo. The
+    document management surface for pulling HR document metadata out of the platform.
+- aid: kenjo:kenjo-compensation-api
+  name: Kenjo Compensation and Payroll API
+  tags:
+  - Payroll
+  - Compensation
+  - Contracts
+  - Human Resources
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/get_compensation-contracts
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://kenjo.readme.io/reference/get_compensation-contracts
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Read compensation and payroll-adjacent data - contracts, contract
+    types, salaries, additional payments, and additional payment types - to feed
+    payroll runs and compensation reporting from Kenjo's HRIS.
+- aid: kenjo:kenjo-organization-api
+  name: Kenjo Organization API
+  tags:
+  - Organization
+  - Departments
+  - Teams
+  - Employee Management
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/get_companies
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://kenjo.readme.io/reference/get_companies
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Manage the organizational structure behind the HRIS - companies,
+    offices, departments, teams, areas, and calendars - with full CRUD on offices,
+    departments, teams, and areas so an external directory can mirror Kenjo's org.
+- aid: kenjo:kenjo-recruiting-api
+  name: Kenjo Recruiting API
+  tags:
+  - Recruiting
+  - ATS
+  - Candidates
+  - Human Resources
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://kenjo.readme.io/reference/get_recruiting-positions
+  baseURL: https://api.kenjo.io/api/v1
+  properties:
+  - url: https://help.kenjo.io/en/support/solutions/articles/60000715727-how-can-i-use-kenjo-api-to-build-my-custom-career-site-
+    type: Documentation
+  - url: https://kenjo.readme.io/reference/get_recruiting-positions
+    type: APIReference
+  - url: openapi/kenjo-openapi.yml
+    type: OpenAPI
+  - url: collections/kenjo.postman_collection.json
+    type: PostmanCollection
+  - url: collections/kenjo.opencollection.json
+    type: OpenCollection
+  description: Applicant tracking surface - list public job positions, create and
+    manage candidates and their attachments and documents, and create and update
+    applications tying a candidate to a position. Also powers custom career sites
+    built on top of Kenjo's public positions endpoint.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/kenjohr
+- type: Website
+  url: https://www.kenjo.io/
+- type: Documentation
+  url: https://kenjo.readme.io/reference
+- type: SupportEmail
+  url: mailto:support@kenjo.io
+- type: Plans
+  url: plans/kenjo-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/kenjo-rate-limits.yml
+- type: FinOps
+  url: finops/kenjo-finops.yml
+- url: https://www.kenjo.io/blog
+  type: Blog
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
