@@ -188,6 +188,8 @@ apis:
     applications tying a candidate to a position. Also powers custom career sites
     built on top of Kenjo's public positions endpoint.
 common:
+- type: AgenticAccess
+  url: agentic-access/kenjo-agentic-access.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/kenjohr
 - type: Website
