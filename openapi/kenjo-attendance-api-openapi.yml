@@ -1,0 +1,290 @@
+openapi: 3.0.3
+info:
+  title: Kenjo Attendance API
+  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
+
+    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  version: '1.0'
+  contact:
+    name: Kenjo Support
+    url: https://www.kenjo.io/legal/api
+    email: support@kenjo.io
+servers:
+- url: https://api.kenjo.io/api/v1
+  description: Production
+- url: https://sandbox-api.kenjo.io/api/v1
+  description: Sandbox (test environment)
+security:
+- bearerAuth: []
+tags:
+- name: Attendance
+  description: Attendance and time-tracking entries.
+paths:
+  /attendances:
+    get:
+      operationId: listAttendances
+      tags:
+      - Attendance
+      summary: List attendances
+      description: Returns a list of attendance entries.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A list of attendance entries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AttendanceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createAttendance
+      tags:
+      - Attendance
+      summary: Create an attendance
+      description: Creates a new attendance entry, identifying the employee by userId, email, or externalId.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceInput'
+      responses:
+        '201':
+          description: The created attendance entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /attendances/{attendanceId}:
+    get:
+      operationId: getAttendance
+      tags:
+      - Attendance
+      summary: Get an attendance
+      parameters:
+      - $ref: '#/components/parameters/AttendanceId'
+      responses:
+        '200':
+          description: The attendance entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAttendance
+      tags:
+      - Attendance
+      summary: Update an attendance
+      parameters:
+      - $ref: '#/components/parameters/AttendanceId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttendanceInput'
+      responses:
+        '200':
+          description: The updated attendance entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteAttendance
+      tags:
+      - Attendance
+      summary: Delete an attendance
+      parameters:
+      - $ref: '#/components/parameters/AttendanceId'
+      responses:
+        '204':
+          description: The attendance entry was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /attendances/track-time:
+    post:
+      operationId: trackTime
+      tags:
+      - Attendance
+      summary: Track an attendance entry
+      description: Tracks a clock-in / clock-out by sending an employee identifier and a dateTime.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrackTimeInput'
+      responses:
+        '200':
+          description: The tracked attendance entry.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Attendance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /attendances/categories:
+    get:
+      operationId: listAttendanceCategories
+      tags:
+      - Attendance
+      summary: List attendance categories
+      responses:
+        '200':
+          description: A list of attendance categories.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /attendances/expected-time:
+    get:
+      operationId: listExpectedTime
+      tags:
+      - Attendance
+      summary: List expected time per user
+      description: Returns a paginated list of expected working time by user for a given date range.
+      parameters:
+      - name: from
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: to
+        in: query
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: A list of expected times.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    AttendanceList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    AttendanceInput:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+          format: email
+        externalId:
+          type: string
+        date:
+          type: string
+          format: date
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        category:
+          type: string
+    Attendance:
+      allOf:
+      - $ref: '#/components/schemas/AttendanceInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+    TrackTimeInput:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+          format: email
+        externalId:
+          type: string
+        dateTime:
+          type: string
+          format: date-time
+      required:
+      - dateTime
+  parameters:
+    AttendanceId:
+      name: attendanceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the attendance entry.
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return per page.
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index for paginated results.
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from POST /auth/login by exchanging a Kenjo API key.

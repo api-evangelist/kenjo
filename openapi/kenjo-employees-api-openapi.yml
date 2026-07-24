@@ -1,0 +1,510 @@
+openapi: 3.0.3
+info:
+  title: Kenjo Attendance Employees API
+  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
+
+    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  version: '1.0'
+  contact:
+    name: Kenjo Support
+    url: https://www.kenjo.io/legal/api
+    email: support@kenjo.io
+servers:
+- url: https://api.kenjo.io/api/v1
+  description: Production
+- url: https://sandbox-api.kenjo.io/api/v1
+  description: Sandbox (test environment)
+security:
+- bearerAuth: []
+tags:
+- name: Employees
+  description: Employee records and their profile sections.
+paths:
+  /user-accounts:
+    get:
+      operationId: listUserAccounts
+      tags:
+      - Employees
+      summary: List user accounts
+      description: Returns a list of user accounts in the organization.
+      responses:
+        '200':
+          description: A list of user accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccountList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees:
+    get:
+      operationId: listEmployees
+      tags:
+      - Employees
+      summary: List employees
+      description: Returns a paginated list of employees.
+      parameters:
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: A list of employees.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEmployee
+      tags:
+      - Employees
+      summary: Create a new employee
+      description: Creates a new employee. New employees are created deactivated by default and can be activated with the activate endpoint.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeInput'
+      responses:
+        '201':
+          description: The created employee.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}:
+    get:
+      operationId: getEmployee
+      tags:
+      - Employees
+      summary: Get an employee
+      description: Returns all sections for a given employee id.
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      responses:
+        '200':
+          description: The employee with all sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employee'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /employees/accounts:
+    get:
+      operationId: listEmployeeAccounts
+      tags:
+      - Employees
+      summary: List employee accounts
+      description: Returns a list of employee accounts containing email, external id, language, and activation status.
+      responses:
+        '200':
+          description: A list of employee accounts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeAccountList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/personals:
+    get:
+      operationId: listEmployeePersonals
+      tags:
+      - Employees
+      summary: List employee personal information
+      description: Returns personal information for employees.
+      responses:
+        '200':
+          description: A list of personal information sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/works:
+    get:
+      operationId: listEmployeeWorks
+      tags:
+      - Employees
+      summary: List employee work information
+      description: Returns work information for employees.
+      responses:
+        '200':
+          description: A list of work information sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/work-schedules:
+    get:
+      operationId: listEmployeeWorkSchedules
+      tags:
+      - Employees
+      summary: List employee work schedules
+      description: Returns work schedules for employees.
+      responses:
+        '200':
+          description: A list of work schedules.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/addresses:
+    get:
+      operationId: listEmployeeAddresses
+      tags:
+      - Employees
+      summary: List employee addresses
+      description: Returns addresses for employees.
+      responses:
+        '200':
+          description: A list of address sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/financials:
+    get:
+      operationId: listEmployeeFinancials
+      tags:
+      - Employees
+      summary: List employee financial data
+      description: Returns financial data sections for employees.
+      responses:
+        '200':
+          description: A list of financial sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/homes:
+    get:
+      operationId: listEmployeeHomes
+      tags:
+      - Employees
+      summary: List employee home information
+      description: Returns home information sections for employees.
+      responses:
+        '200':
+          description: A list of home sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/emergencies:
+    get:
+      operationId: listEmployeeEmergencies
+      tags:
+      - Employees
+      summary: List employee emergency contacts
+      description: Returns emergency contact sections for employees.
+      responses:
+        '200':
+          description: A list of emergency contact sections.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SectionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/accounts:
+    put:
+      operationId: updateEmployeeAccount
+      tags:
+      - Employees
+      summary: Update employee account section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/personals:
+    put:
+      operationId: updateEmployeePersonal
+      tags:
+      - Employees
+      summary: Update employee personal section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/works:
+    put:
+      operationId: updateEmployeeWork
+      tags:
+      - Employees
+      summary: Update employee work section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/work-schedules:
+    put:
+      operationId: updateEmployeeWorkSchedule
+      tags:
+      - Employees
+      summary: Update employee work schedule section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/addresses:
+    put:
+      operationId: updateEmployeeAddress
+      tags:
+      - Employees
+      summary: Update employee address section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/financials:
+    put:
+      operationId: updateEmployeeFinancial
+      tags:
+      - Employees
+      summary: Update employee financial section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/homes:
+    put:
+      operationId: updateEmployeeHome
+      tags:
+      - Employees
+      summary: Update employee home section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/emergencies:
+    put:
+      operationId: updateEmployeeEmergency
+      tags:
+      - Employees
+      summary: Update employee emergency section
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Section'
+      responses:
+        '200':
+          description: The updated section.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/activate:
+    put:
+      operationId: activateEmployee
+      tags:
+      - Employees
+      summary: Activate an employee
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      responses:
+        '200':
+          description: The employee was activated.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /employees/{employeeId}/deactivate:
+    put:
+      operationId: deactivateEmployee
+      tags:
+      - Employees
+      summary: Deactivate an employee
+      parameters:
+      - $ref: '#/components/parameters/EmployeeId'
+      responses:
+        '200':
+          description: The employee was deactivated.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the employee.
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return per page.
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index for paginated results.
+  schemas:
+    EmployeeList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    EmployeeInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        externalId:
+          type: string
+        language:
+          type: string
+      required:
+      - email
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    Section:
+      type: object
+      additionalProperties: true
+      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
+    UserAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    EmployeeAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Employee:
+      allOf:
+      - $ref: '#/components/schemas/EmployeeInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          active:
+            type: boolean
+    SectionList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from POST /auth/login by exchanging a Kenjo API key.

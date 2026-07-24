@@ -1,0 +1,216 @@
+openapi: 3.0.3
+info:
+  title: Kenjo Attendance Time Off API
+  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
+
+    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  version: '1.0'
+  contact:
+    name: Kenjo Support
+    url: https://www.kenjo.io/legal/api
+    email: support@kenjo.io
+servers:
+- url: https://api.kenjo.io/api/v1
+  description: Production
+- url: https://sandbox-api.kenjo.io/api/v1
+  description: Sandbox (test environment)
+security:
+- bearerAuth: []
+tags:
+- name: Time Off
+  description: Absences, time-off requests, types, statuses, and balances.
+paths:
+  /time-off-requests:
+    get:
+      operationId: listTimeOffRequests
+      tags:
+      - Time Off
+      summary: List time-off requests
+      responses:
+        '200':
+          description: A list of time-off requests.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeOffRequestList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTimeOffRequest
+      tags:
+      - Time Off
+      summary: Create a time-off request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeOffRequestInput'
+      responses:
+        '201':
+          description: The created time-off request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeOffRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time-off-requests/processed:
+    post:
+      operationId: createProcessedTimeOffRequest
+      tags:
+      - Time Off
+      summary: Create a pre-approved time-off request
+      description: Creates a time-off request that is already approved (processed).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeOffRequestInput'
+      responses:
+        '201':
+          description: The created pre-approved time-off request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TimeOffRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time-off-types:
+    get:
+      operationId: listTimeOffTypes
+      tags:
+      - Time Off
+      summary: List time-off types
+      responses:
+        '200':
+          description: A list of time-off types.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time-off-status:
+    get:
+      operationId: listTimeOffStatus
+      tags:
+      - Time Off
+      summary: List time-off statuses
+      responses:
+        '200':
+          description: A list of time-off statuses.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /time-off/set-balance/{timeOffTypeId}/{employeeId}:
+    put:
+      operationId: setTimeOffBalance
+      tags:
+      - Time Off
+      summary: Set a time-off balance
+      description: Sets an employee's balance for a given time-off type.
+      parameters:
+      - name: timeOffTypeId
+        in: path
+        required: true
+        schema:
+          type: string
+      - $ref: '#/components/parameters/EmployeeId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BalanceInput'
+      responses:
+        '200':
+          description: The balance was set.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the employee.
+  schemas:
+    TimeOffRequestList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    BalanceInput:
+      type: object
+      properties:
+        balance:
+          type: number
+          description: The balance value to set for the time-off type.
+      required:
+      - balance
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    TimeOffRequest:
+      allOf:
+      - $ref: '#/components/schemas/TimeOffRequestInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          status:
+            type: string
+    TimeOffRequestInput:
+      type: object
+      properties:
+        employeeId:
+          type: string
+        timeOffTypeId:
+          type: string
+        from:
+          type: string
+          format: date
+        to:
+          type: string
+          format: date
+        description:
+          type: string
+      required:
+      - timeOffTypeId
+      - from
+      - to
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from POST /auth/login by exchanging a Kenjo API key.

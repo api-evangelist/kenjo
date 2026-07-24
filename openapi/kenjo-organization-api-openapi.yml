@@ -1,0 +1,458 @@
+openapi: 3.0.3
+info:
+  title: Kenjo Attendance Organization API
+  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
+
+    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  version: '1.0'
+  contact:
+    name: Kenjo Support
+    url: https://www.kenjo.io/legal/api
+    email: support@kenjo.io
+servers:
+- url: https://api.kenjo.io/api/v1
+  description: Production
+- url: https://sandbox-api.kenjo.io/api/v1
+  description: Sandbox (test environment)
+security:
+- bearerAuth: []
+tags:
+- name: Organization
+  description: Companies, offices, departments, teams, areas, and calendars.
+paths:
+  /companies:
+    get:
+      operationId: listCompanies
+      tags:
+      - Organization
+      summary: List companies
+      responses:
+        '200':
+          description: A list of companies.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /offices:
+    get:
+      operationId: listOffices
+      tags:
+      - Organization
+      summary: List offices
+      responses:
+        '200':
+          description: A list of offices.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createOffice
+      tags:
+      - Organization
+      summary: Create an office
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '201':
+          description: The created office.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /offices/{id}:
+    get:
+      operationId: getOffice
+      tags:
+      - Organization
+      summary: Get an office
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: The office.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateOffice
+      tags:
+      - Organization
+      summary: Update an office
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '200':
+          description: The updated office.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteOffice
+      tags:
+      - Organization
+      summary: Delete an office
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '204':
+          description: The office was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /departments:
+    get:
+      operationId: listDepartments
+      tags:
+      - Organization
+      summary: List departments
+      responses:
+        '200':
+          description: A list of departments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDepartment
+      tags:
+      - Organization
+      summary: Create a department
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '201':
+          description: The created department.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /departments/{id}:
+    get:
+      operationId: getDepartment
+      tags:
+      - Organization
+      summary: Get a department
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: The department.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateDepartment
+      tags:
+      - Organization
+      summary: Update a department
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '200':
+          description: The updated department.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteDepartment
+      tags:
+      - Organization
+      summary: Delete a department
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '204':
+          description: The department was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /teams:
+    get:
+      operationId: listTeams
+      tags:
+      - Organization
+      summary: List teams
+      responses:
+        '200':
+          description: A list of teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTeam
+      tags:
+      - Organization
+      summary: Create a team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '201':
+          description: The created team.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /teams/{id}:
+    get:
+      operationId: getTeam
+      tags:
+      - Organization
+      summary: Get a team
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: The team.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateTeam
+      tags:
+      - Organization
+      summary: Update a team
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '200':
+          description: The updated team.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteTeam
+      tags:
+      - Organization
+      summary: Delete a team
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '204':
+          description: The team was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /areas:
+    get:
+      operationId: listAreas
+      tags:
+      - Organization
+      summary: List areas
+      responses:
+        '200':
+          description: A list of areas.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createArea
+      tags:
+      - Organization
+      summary: Create an area
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '201':
+          description: The created area.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /areas/{id}:
+    get:
+      operationId: getArea
+      tags:
+      - Organization
+      summary: Get an area
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: The area.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateArea
+      tags:
+      - Organization
+      summary: Update an area
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NamedResourceInput'
+      responses:
+        '200':
+          description: The updated area.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      operationId: deleteArea
+      tags:
+      - Organization
+      summary: Delete an area
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '204':
+          description: The area was deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /calendars:
+    get:
+      operationId: listCalendars
+      tags:
+      - Organization
+      summary: List calendars
+      responses:
+        '200':
+          description: A list of calendars.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /calendars/{id}:
+    get:
+      operationId: getCalendar
+      tags:
+      - Organization
+      summary: Get a calendar
+      parameters:
+      - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: The calendar.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /custom-fields:
+    get:
+      operationId: listCustomFields
+      tags:
+      - Organization
+      summary: List custom fields
+      responses:
+        '200':
+          description: A list of custom fields.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /work-schedules/contracted-weekly-minutes:
+    get:
+      operationId: listContractedWeeklyMinutes
+      tags:
+      - Organization
+      summary: List contracted weekly minutes
+      description: Returns contracted weekly minutes per employee.
+      responses:
+        '200':
+          description: A list of contracted weekly minutes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the resource.
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    NamedResourceInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from POST /auth/login by exchanging a Kenjo API key.

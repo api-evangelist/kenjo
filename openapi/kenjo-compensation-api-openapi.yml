@@ -1,0 +1,132 @@
+openapi: 3.0.3
+info:
+  title: Kenjo Attendance Compensation API
+  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
+
+    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  version: '1.0'
+  contact:
+    name: Kenjo Support
+    url: https://www.kenjo.io/legal/api
+    email: support@kenjo.io
+servers:
+- url: https://api.kenjo.io/api/v1
+  description: Production
+- url: https://sandbox-api.kenjo.io/api/v1
+  description: Sandbox (test environment)
+security:
+- bearerAuth: []
+tags:
+- name: Compensation
+  description: Contracts, salaries, and additional payments.
+paths:
+  /compensation/contracts:
+    get:
+      operationId: listContracts
+      tags:
+      - Compensation
+      summary: List contracts
+      responses:
+        '200':
+          description: A list of contracts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /compensation/contract-types:
+    get:
+      operationId: listContractTypes
+      tags:
+      - Compensation
+      summary: List contract types
+      responses:
+        '200':
+          description: A list of contract types.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /compensation/salaries:
+    get:
+      operationId: listSalaries
+      tags:
+      - Compensation
+      summary: List salaries
+      responses:
+        '200':
+          description: A list of salaries.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /compensation/additional-payments:
+    get:
+      operationId: listAdditionalPayments
+      tags:
+      - Compensation
+      summary: List additional payments
+      responses:
+        '200':
+          description: A list of additional payments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /compensation/additional-payment-types:
+    get:
+      operationId: listAdditionalPaymentTypes
+      tags:
+      - Compensation
+      summary: List additional payment types
+      responses:
+        '200':
+          description: A list of additional payment types.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from POST /auth/login by exchanging a Kenjo API key.

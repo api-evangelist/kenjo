@@ -1,0 +1,277 @@
+openapi: 3.0.3
+info:
+  title: Kenjo Attendance Recruiting API
+  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
+
+    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  version: '1.0'
+  contact:
+    name: Kenjo Support
+    url: https://www.kenjo.io/legal/api
+    email: support@kenjo.io
+servers:
+- url: https://api.kenjo.io/api/v1
+  description: Production
+- url: https://sandbox-api.kenjo.io/api/v1
+  description: Sandbox (test environment)
+security:
+- bearerAuth: []
+tags:
+- name: Recruiting
+  description: Positions, candidates, and applications.
+paths:
+  /recruiting/positions:
+    get:
+      operationId: listPositions
+      tags:
+      - Recruiting
+      summary: List job positions
+      description: Returns a list of job openings, including public positions usable to build a custom career site.
+      responses:
+        '200':
+          description: A list of positions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/candidates:
+    get:
+      operationId: listCandidates
+      tags:
+      - Recruiting
+      summary: List candidates
+      responses:
+        '200':
+          description: A list of candidates.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createCandidate
+      tags:
+      - Recruiting
+      summary: Create a candidate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateInput'
+      responses:
+        '201':
+          description: The created candidate.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/candidates/{candidateId}:
+    get:
+      operationId: getCandidate
+      tags:
+      - Recruiting
+      summary: Get a candidate
+      parameters:
+      - $ref: '#/components/parameters/CandidateId'
+      responses:
+        '200':
+          description: The candidate.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCandidate
+      tags:
+      - Recruiting
+      summary: Update a candidate
+      parameters:
+      - $ref: '#/components/parameters/CandidateId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CandidateInput'
+      responses:
+        '200':
+          description: The updated candidate.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/candidates/{candidateId}/attachment:
+    post:
+      operationId: addCandidateAttachment
+      tags:
+      - Recruiting
+      summary: Add a candidate attachment
+      parameters:
+      - $ref: '#/components/parameters/CandidateId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: The attachment was added.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/candidates/{candidateId}/documents:
+    get:
+      operationId: getCandidateDocuments
+      tags:
+      - Recruiting
+      summary: Get candidate documents
+      parameters:
+      - $ref: '#/components/parameters/CandidateId'
+      responses:
+        '200':
+          description: A list of candidate documents.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/applications:
+    get:
+      operationId: listApplications
+      tags:
+      - Recruiting
+      summary: List applications
+      responses:
+        '200':
+          description: A list of applications.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/applications/position/{positionId}/candidate/{candidateId}:
+    post:
+      operationId: createApplication
+      tags:
+      - Recruiting
+      summary: Create an application
+      description: Creates an application tying a candidate to a position.
+      parameters:
+      - $ref: '#/components/parameters/PositionId'
+      - $ref: '#/components/parameters/CandidateId'
+      responses:
+        '201':
+          description: The created application.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    put:
+      operationId: updateApplication
+      tags:
+      - Recruiting
+      summary: Update an application
+      parameters:
+      - $ref: '#/components/parameters/PositionId'
+      - $ref: '#/components/parameters/CandidateId'
+      responses:
+        '200':
+          description: The updated application.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /recruiting/applications/position/{positionId}/candidate/{candidateId}/attachment:
+    post:
+      operationId: addApplicationAttachment
+      tags:
+      - Recruiting
+      summary: Add an application attachment
+      parameters:
+      - $ref: '#/components/parameters/PositionId'
+      - $ref: '#/components/parameters/CandidateId'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: The attachment was added.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    CandidateInput:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+  parameters:
+    PositionId:
+      name: positionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the position.
+    CandidateId:
+      name: candidateId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the candidate.
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Bearer token obtained from POST /auth/login by exchanging a Kenjo API key.
