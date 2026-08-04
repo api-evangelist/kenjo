@@ -1,0 +1,28 @@
+{
+  "provider": "kenjo",
+  "sources": [
+    "kenjo-attendance-api-openapi.yml",
+    "kenjo-authentication-api-openapi.yml",
+    "kenjo-compensation-api-openapi.yml",
+    "kenjo-documents-api-openapi.yml",
+    "kenjo-employees-api-openapi.yml",
+    "kenjo-organization-api-openapi.yml",
+    "kenjo-recruiting-api-openapi.yml",
+    "kenjo-time-off-api-openapi.yml"
+  ],
+  "outputs": [
+    "kenjo-attendance-api-openapi.yml",
+    "kenjo-authentication-api-openapi.yml",
+    "kenjo-compensation-api-openapi.yml",
+    "kenjo-documents-api-openapi.yml",
+    "kenjo-employees-api-openapi.yml",
+    "kenjo-organization-api-openapi.yml",
+    "kenjo-recruiting-api-openapi.yml",
+    "kenjo-time-off-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
