@@ -1,0 +1,115 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo Attendance Time Off API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Time Off",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List time-off requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/time-off-requests"
+          },
+          "docs": "List time-off requests"
+        },
+        {
+          "info": {
+            "name": "Create a time-off request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/time-off-requests",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a time-off request"
+        },
+        {
+          "info": {
+            "name": "Create a pre-approved time-off request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/time-off-requests/processed",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a time-off request that is already approved (processed)."
+        },
+        {
+          "info": {
+            "name": "List time-off types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/time-off-types"
+          },
+          "docs": "List time-off types"
+        },
+        {
+          "info": {
+            "name": "List time-off statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/time-off-status"
+          },
+          "docs": "List time-off statuses"
+        },
+        {
+          "info": {
+            "name": "Set a time-off balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/time-off/set-balance/:timeOffTypeId/:employeeId",
+            "params": [
+              {
+                "name": "timeOffTypeId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets an employee's balance for a given time-off type."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

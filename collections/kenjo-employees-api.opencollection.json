@@ -1,0 +1,404 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo Attendance Employees API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Employees",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List user accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/user-accounts"
+          },
+          "docs": "Returns a list of user accounts in the organization."
+        },
+        {
+          "info": {
+            "name": "List employees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page index for paginated results."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of employees."
+        },
+        {
+          "info": {
+            "name": "Create a new employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/employees",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new employee. New employees are created deactivated by default and can be activated with the activate endpoint."
+        },
+        {
+          "info": {
+            "name": "Get an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ]
+          },
+          "docs": "Returns all sections for a given employee id."
+        },
+        {
+          "info": {
+            "name": "List employee accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/accounts"
+          },
+          "docs": "Returns a list of employee accounts containing email, external id, language, and activation status."
+        },
+        {
+          "info": {
+            "name": "List employee personal information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/personals"
+          },
+          "docs": "Returns personal information for employees."
+        },
+        {
+          "info": {
+            "name": "List employee work information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/works"
+          },
+          "docs": "Returns work information for employees."
+        },
+        {
+          "info": {
+            "name": "List employee work schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/work-schedules"
+          },
+          "docs": "Returns work schedules for employees."
+        },
+        {
+          "info": {
+            "name": "List employee addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/addresses"
+          },
+          "docs": "Returns addresses for employees."
+        },
+        {
+          "info": {
+            "name": "List employee financial data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/financials"
+          },
+          "docs": "Returns financial data sections for employees."
+        },
+        {
+          "info": {
+            "name": "List employee home information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/homes"
+          },
+          "docs": "Returns home information sections for employees."
+        },
+        {
+          "info": {
+            "name": "List employee emergency contacts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/employees/emergencies"
+          },
+          "docs": "Returns emergency contact sections for employees."
+        },
+        {
+          "info": {
+            "name": "Update employee account section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/accounts",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee account section"
+        },
+        {
+          "info": {
+            "name": "Update employee personal section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/personals",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee personal section"
+        },
+        {
+          "info": {
+            "name": "Update employee work section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/works",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee work section"
+        },
+        {
+          "info": {
+            "name": "Update employee work schedule section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/work-schedules",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee work schedule section"
+        },
+        {
+          "info": {
+            "name": "Update employee address section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/addresses",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee address section"
+        },
+        {
+          "info": {
+            "name": "Update employee financial section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/financials",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee financial section"
+        },
+        {
+          "info": {
+            "name": "Update employee home section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/homes",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee home section"
+        },
+        {
+          "info": {
+            "name": "Update employee emergency section",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/emergencies",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update employee emergency section"
+        },
+        {
+          "info": {
+            "name": "Activate an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/activate",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ]
+          },
+          "docs": "Activate an employee"
+        },
+        {
+          "info": {
+            "name": "Deactivate an employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/employees/:employeeId/deactivate",
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the employee."
+              }
+            ]
+          },
+          "docs": "Deactivate an employee"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

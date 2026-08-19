@@ -1,0 +1,435 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo Attendance Organization API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/companies"
+          },
+          "docs": "List companies"
+        },
+        {
+          "info": {
+            "name": "List offices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/offices"
+          },
+          "docs": "List offices"
+        },
+        {
+          "info": {
+            "name": "Create an office",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/offices",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an office"
+        },
+        {
+          "info": {
+            "name": "Get an office",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/offices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Get an office"
+        },
+        {
+          "info": {
+            "name": "Update an office",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/offices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an office"
+        },
+        {
+          "info": {
+            "name": "Delete an office",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kenjo.io/api/v1/offices/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an office"
+        },
+        {
+          "info": {
+            "name": "List departments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/departments"
+          },
+          "docs": "List departments"
+        },
+        {
+          "info": {
+            "name": "Create a department",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/departments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a department"
+        },
+        {
+          "info": {
+            "name": "Get a department",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/departments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Get a department"
+        },
+        {
+          "info": {
+            "name": "Update a department",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/departments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a department"
+        },
+        {
+          "info": {
+            "name": "Delete a department",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kenjo.io/api/v1/departments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Delete a department"
+        },
+        {
+          "info": {
+            "name": "List teams",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/teams"
+          },
+          "docs": "List teams"
+        },
+        {
+          "info": {
+            "name": "Create a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/teams",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a team"
+        },
+        {
+          "info": {
+            "name": "Get a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/teams/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Get a team"
+        },
+        {
+          "info": {
+            "name": "Update a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/teams/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a team"
+        },
+        {
+          "info": {
+            "name": "Delete a team",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kenjo.io/api/v1/teams/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Delete a team"
+        },
+        {
+          "info": {
+            "name": "List areas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/areas"
+          },
+          "docs": "List areas"
+        },
+        {
+          "info": {
+            "name": "Create an area",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/areas",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an area"
+        },
+        {
+          "info": {
+            "name": "Get an area",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/areas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Get an area"
+        },
+        {
+          "info": {
+            "name": "Update an area",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/areas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an area"
+        },
+        {
+          "info": {
+            "name": "Delete an area",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kenjo.io/api/v1/areas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Delete an area"
+        },
+        {
+          "info": {
+            "name": "List calendars",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/calendars"
+          },
+          "docs": "List calendars"
+        },
+        {
+          "info": {
+            "name": "Get a calendar",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/calendars/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the resource."
+              }
+            ]
+          },
+          "docs": "Get a calendar"
+        },
+        {
+          "info": {
+            "name": "List custom fields",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/custom-fields"
+          },
+          "docs": "List custom fields"
+        },
+        {
+          "info": {
+            "name": "List contracted weekly minutes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/work-schedules/contracted-weekly-minutes"
+          },
+          "docs": "Returns contracted weekly minutes per employee."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,196 @@
+{
+  "item": [
+    {
+      "id": "bbb98a63-5413-454a-aecd-510dc4be0ed6",
+      "name": "Documents",
+      "description": {
+        "content": "Company documents.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fbf281fd-82bf-469f-924f-b89357820f2d",
+          "name": "List company documents",
+          "request": {
+            "name": "List company documents",
+            "description": {
+              "content": "Returns a paginated list of company documents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "documents",
+                "company"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "Zero-based page index for paginated results."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of items to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e4e45806-9e55-43c3-9e8e-af106bbdd0f8",
+              "name": "A list of company documents.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    "company"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 5683.0081266797115\n    },\n    {\n      \"key_0\": 6410.605205807285\n    }\n  ],\n  \"page\": 173,\n  \"limit\": 9738,\n  \"total\": 2983\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6339282e-c189-4fa5-9568-868ca778afbf",
+              "name": "The bearer token is missing, invalid, or expired.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "documents",
+                    "company"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.kenjo.io/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4a092cd1-d2ca-47be-b429-fe52ba50cfa6",
+    "name": "Kenjo Attendance Documents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo's top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.\nPaths and HTTP methods in this document reflect Kenjo's published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.\n\nContact Support:\n Name: Kenjo Support\n Email: support@kenjo.io",
+      "type": "text/plain"
+    }
+  }
+}

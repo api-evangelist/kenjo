@@ -1,0 +1,174 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo Attendance API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Attendance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List attendances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/attendances",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Zero-based page index for paginated results."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page."
+              }
+            ]
+          },
+          "docs": "Returns a list of attendance entries."
+        },
+        {
+          "info": {
+            "name": "Create an attendance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/attendances",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new attendance entry, identifying the employee by userId, email, or externalId."
+        },
+        {
+          "info": {
+            "name": "Get an attendance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/attendances/:attendanceId",
+            "params": [
+              {
+                "name": "attendanceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the attendance entry."
+              }
+            ]
+          },
+          "docs": "Get an attendance"
+        },
+        {
+          "info": {
+            "name": "Update an attendance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/attendances/:attendanceId",
+            "params": [
+              {
+                "name": "attendanceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the attendance entry."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an attendance"
+        },
+        {
+          "info": {
+            "name": "Delete an attendance",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.kenjo.io/api/v1/attendances/:attendanceId",
+            "params": [
+              {
+                "name": "attendanceId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the attendance entry."
+              }
+            ]
+          },
+          "docs": "Delete an attendance"
+        },
+        {
+          "info": {
+            "name": "Track an attendance entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/attendances/track-time",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Tracks a clock-in / clock-out by sending an employee identifier and a dateTime."
+        },
+        {
+          "info": {
+            "name": "List attendance categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/attendances/categories"
+          },
+          "docs": "List attendance categories"
+        },
+        {
+          "info": {
+            "name": "List expected time per user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/attendances/expected-time",
+            "params": [
+              {
+                "name": "from",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of expected working time by user for a given date range."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

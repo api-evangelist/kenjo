@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo Attendance Compensation API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Compensation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List contracts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/compensation/contracts"
+          },
+          "docs": "List contracts"
+        },
+        {
+          "info": {
+            "name": "List contract types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/compensation/contract-types"
+          },
+          "docs": "List contract types"
+        },
+        {
+          "info": {
+            "name": "List salaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/compensation/salaries"
+          },
+          "docs": "List salaries"
+        },
+        {
+          "info": {
+            "name": "List additional payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/compensation/additional-payments"
+          },
+          "docs": "List additional payments"
+        },
+        {
+          "info": {
+            "name": "List additional payment types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/compensation/additional-payment-types"
+          },
+          "docs": "List additional payment types"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

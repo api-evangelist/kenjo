@@ -1,0 +1,247 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kenjo Attendance Recruiting API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recruiting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List job positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/recruiting/positions"
+          },
+          "docs": "Returns a list of job openings, including public positions usable to build a custom career site."
+        },
+        {
+          "info": {
+            "name": "List candidates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates"
+          },
+          "docs": "List candidates"
+        },
+        {
+          "info": {
+            "name": "Create a candidate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a candidate"
+        },
+        {
+          "info": {
+            "name": "Get a candidate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates/:candidateId",
+            "params": [
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ]
+          },
+          "docs": "Get a candidate"
+        },
+        {
+          "info": {
+            "name": "Update a candidate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates/:candidateId",
+            "params": [
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a candidate"
+        },
+        {
+          "info": {
+            "name": "Add a candidate attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates/:candidateId/attachment",
+            "params": [
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add a candidate attachment"
+        },
+        {
+          "info": {
+            "name": "Get candidate documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/recruiting/candidates/:candidateId/documents",
+            "params": [
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ]
+          },
+          "docs": "Get candidate documents"
+        },
+        {
+          "info": {
+            "name": "List applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kenjo.io/api/v1/recruiting/applications"
+          },
+          "docs": "List applications"
+        },
+        {
+          "info": {
+            "name": "Create an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/recruiting/applications/position/:positionId/candidate/:candidateId",
+            "params": [
+              {
+                "name": "positionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the position."
+              },
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ]
+          },
+          "docs": "Creates an application tying a candidate to a position."
+        },
+        {
+          "info": {
+            "name": "Update an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.kenjo.io/api/v1/recruiting/applications/position/:positionId/candidate/:candidateId",
+            "params": [
+              {
+                "name": "positionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the position."
+              },
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ]
+          },
+          "docs": "Update an application"
+        },
+        {
+          "info": {
+            "name": "Add an application attachment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kenjo.io/api/v1/recruiting/applications/position/:positionId/candidate/:candidateId/attachment",
+            "params": [
+              {
+                "name": "positionId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the position."
+              },
+              {
+                "name": "candidateId",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the candidate."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Add an application attachment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
