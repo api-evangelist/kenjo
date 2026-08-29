@@ -13,6 +13,18 @@ description: Kenjo is an all-in-one human resources (HRIS) software platform for
   and recruiting data. API access is gated - it is available on Kenjo's top-tier
   Connect plan and must be activated by the Kenjo Customer Success team, then keys
   are generated in Settings > Integrations > API and exchanged for a bearer token.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
