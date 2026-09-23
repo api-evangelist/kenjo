@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kenjo Attendance Time Off API
-  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
-
-    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  title: Kenjo Time Off API
+  description: The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform.
   version: '1.0'
   contact:
     name: Kenjo Support
@@ -133,33 +131,16 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    EmployeeId:
-      name: employeeId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the employee.
   schemas:
-    TimeOffRequestList:
+    TimeOffRequest:
       allOf:
-      - $ref: '#/components/schemas/GenericList'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    BalanceInput:
-      type: object
-      properties:
-        balance:
-          type: number
-          description: The balance value to set for the time-off type.
-      required:
-      - balance
+      - $ref: '#/components/schemas/TimeOffRequestInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          status:
+            type: string
     GenericList:
       type: object
       properties:
@@ -174,15 +155,6 @@ components:
           type: integer
         total:
           type: integer
-    TimeOffRequest:
-      allOf:
-      - $ref: '#/components/schemas/TimeOffRequestInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          status:
-            type: string
     TimeOffRequestInput:
       type: object
       properties:
@@ -202,6 +174,24 @@ components:
       - timeOffTypeId
       - from
       - to
+    BalanceInput:
+      type: object
+      properties:
+        balance:
+          type: number
+          description: The balance value to set for the time-off type.
+      required:
+      - balance
+    TimeOffRequestList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   responses:
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.
@@ -209,6 +199,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the employee.
   securitySchemes:
     bearerAuth:
       type: http

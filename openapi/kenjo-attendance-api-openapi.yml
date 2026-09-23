@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Kenjo Attendance API
-  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
-
-    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  description: The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform.
   version: '1.0'
   contact:
     name: Kenjo Support
@@ -179,16 +177,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    AttendanceList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     GenericList:
       type: object
       properties:
@@ -246,7 +234,38 @@ components:
           format: date-time
       required:
       - dateTime
+    AttendanceList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index for paginated results.
     AttendanceId:
       name: attendanceId
       in: path
@@ -262,27 +281,6 @@ components:
         type: integer
         minimum: 1
       description: Number of items to return per page.
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-      description: Zero-based page index for paginated results.
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

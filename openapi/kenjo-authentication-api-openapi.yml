@@ -1,9 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Kenjo Attendance Authentication API
-  description: 'The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform. It exposes employees, attendance and time tracking, time off / absences, company documents, compensation and payroll data, organizational structure, and recruiting over HTTPS. Access is gated: the API is available on Kenjo''s top-tier Connect plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app (Settings > Integrations > API), exchange it for a bearer token via POST /auth/login, and send that token in the Authorization header on every request. A missing, invalid, or expired token returns 401 UNAUTHORIZED.
-
-    Paths and HTTP methods in this document reflect Kenjo''s published API reference (kenjo.readme.io). Request and response bodies are modeled from the documented endpoint descriptions where full field-level schemas are not published; treat the schema components as representative rather than exhaustive, and confirm exact fields against the live reference.'
+  title: Kenjo Authentication API
+  description: The Kenjo API is a documented REST API for the Kenjo all-in-one HR (HRIS) platform.
   version: '1.0'
   contact:
     name: Kenjo Support
@@ -56,7 +54,20 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Bearer token to send in the Authorization header.
     LoginRequest:
       type: object
       required:
@@ -65,12 +76,6 @@ components:
         apiKey:
           type: string
           description: The API key generated in Settings > Integrations > API.
-    LoginResponse:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Bearer token to send in the Authorization header.
     Error:
       type: object
       properties:
@@ -78,13 +83,6 @@ components:
           type: string
         message:
           type: string
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
