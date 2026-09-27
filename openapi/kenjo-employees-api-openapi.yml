@@ -402,6 +402,13 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the employee.
     Limit:
       name: limit
       in: query
@@ -418,53 +425,17 @@ components:
         type: integer
         minimum: 0
       description: Zero-based page index for paginated results.
-    EmployeeId:
-      name: employeeId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the employee.
   schemas:
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
-    Employee:
-      allOf:
-      - $ref: '#/components/schemas/EmployeeInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          active:
-            type: boolean
-    Section:
-      type: object
-      additionalProperties: true
-      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
     EmployeeAccountList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
-    EmployeeList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    SectionList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    UserAccountList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     EmployeeInput:
       type: object
       properties:
@@ -481,13 +452,42 @@ components:
           type: string
       required:
       - email
-    Error:
+    Section:
+      type: object
+      additionalProperties: true
+      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
+    UserAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Employee:
+      allOf:
+      - $ref: '#/components/schemas/EmployeeInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          active:
+            type: boolean
+    SectionList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    GenericList:
       type: object
       properties:
-        code:
-          type: string
-        message:
-          type: string
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    EmployeeList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
   responses:
     NotFound:
       description: The requested resource was not found.

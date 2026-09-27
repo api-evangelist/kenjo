@@ -207,13 +207,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   parameters:
-    PositionId:
-      name: positionId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the position.
     CandidateId:
       name: candidateId
       in: path
@@ -221,21 +214,14 @@ components:
       schema:
         type: string
       description: The unique identifier of the candidate.
+    PositionId:
+      name: positionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the position.
   schemas:
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
     CandidateInput:
       type: object
       properties:
@@ -255,6 +241,20 @@ components:
           type: string
         message:
           type: string
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
   responses:
     NotFound:
       description: The requested resource was not found.

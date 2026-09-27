@@ -176,41 +176,37 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    AttendanceId:
+      name: attendanceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the attendance entry.
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return per page.
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index for paginated results.
   schemas:
-    GenericList:
+    Error:
       type: object
       properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
-    AttendanceInput:
-      type: object
-      properties:
-        userId:
+        code:
           type: string
-        email:
-          type: string
-          format: email
-        externalId:
-          type: string
-        date:
-          type: string
-          format: date
-        startTime:
-          type: string
-          format: date-time
-        endTime:
-          type: string
-          format: date-time
-        category:
+        message:
           type: string
     Attendance:
       allOf:
@@ -234,15 +230,43 @@ components:
           format: date-time
       required:
       - dateTime
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
     AttendanceList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
-    Error:
+    AttendanceInput:
       type: object
       properties:
-        code:
+        userId:
           type: string
-        message:
+        email:
+          type: string
+          format: email
+        externalId:
+          type: string
+        date:
+          type: string
+          format: date
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        category:
           type: string
   responses:
     NotFound:
@@ -257,30 +281,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-      description: Zero-based page index for paginated results.
-    AttendanceId:
-      name: attendanceId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the attendance entry.
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-      description: Number of items to return per page.
   securitySchemes:
     bearerAuth:
       type: http
