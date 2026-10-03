@@ -401,32 +401,34 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    EmployeeId:
-      name: employeeId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the employee.
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-      description: Number of items to return per page.
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-      description: Zero-based page index for paginated results.
   schemas:
+    Employee:
+      allOf:
+      - $ref: '#/components/schemas/EmployeeInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          active:
+            type: boolean
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
     EmployeeAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    EmployeeList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
     Error:
@@ -436,6 +438,9 @@ components:
           type: string
         message:
           type: string
+    SectionList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
     EmployeeInput:
       type: object
       properties:
@@ -452,55 +457,50 @@ components:
           type: string
       required:
       - email
+    UserAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
     Section:
       type: object
       additionalProperties: true
       description: A profile section payload. Field set varies by section (account, personal, work, etc.).
-    UserAccountList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    Employee:
-      allOf:
-      - $ref: '#/components/schemas/EmployeeInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          active:
-            type: boolean
-    SectionList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
-    EmployeeList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
   responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index for paginated results.
+    EmployeeId:
+      name: employeeId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the employee.
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return per page.
   securitySchemes:
     bearerAuth:
       type: http

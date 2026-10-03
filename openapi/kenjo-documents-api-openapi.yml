@@ -38,6 +38,13 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -60,22 +67,7 @@ components:
           type: integer
         total:
           type: integer
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-      description: Number of items to return per page.
     Page:
       name: page
       in: query
@@ -84,6 +76,14 @@ components:
         type: integer
         minimum: 0
       description: Zero-based page index for paginated results.
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return per page.
   securitySchemes:
     bearerAuth:
       type: http

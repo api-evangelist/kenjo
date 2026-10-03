@@ -399,29 +399,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    Id:
-      name: id
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the resource.
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    NamedResourceInput:
-      type: object
-      properties:
-        name:
-          type: string
-      required:
-      - name
     GenericList:
       type: object
       properties:
@@ -436,19 +414,41 @@ components:
           type: integer
         total:
           type: integer
+    NamedResourceInput:
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+      - name
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
   responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the resource.
   securitySchemes:
     bearerAuth:
       type: http

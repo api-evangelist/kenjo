@@ -55,6 +55,12 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Bearer token to send in the Authorization header.
     Error:
       type: object
       properties:
@@ -70,12 +76,6 @@ components:
         apiKey:
           type: string
           description: The API key generated in Settings > Integrations > API.
-    LoginResponse:
-      type: object
-      properties:
-        token:
-          type: string
-          description: Bearer token to send in the Authorization header.
   responses:
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.

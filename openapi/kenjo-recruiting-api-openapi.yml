@@ -206,22 +206,21 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  parameters:
-    CandidateId:
-      name: candidateId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the candidate.
-    PositionId:
-      name: positionId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the position.
   schemas:
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
     CandidateInput:
       type: object
       properties:
@@ -241,29 +240,30 @@ components:
           type: string
         message:
           type: string
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
+  parameters:
+    CandidateId:
+      name: candidateId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the candidate.
+    PositionId:
+      name: positionId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the position.
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:

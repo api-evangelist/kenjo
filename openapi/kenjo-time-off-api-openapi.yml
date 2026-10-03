@@ -131,16 +131,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    TimeOffRequest:
-      allOf:
-      - $ref: '#/components/schemas/TimeOffRequestInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          status:
-            type: string
     TimeOffRequestList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
@@ -159,20 +157,15 @@ components:
           description: The balance value to set for the time-off type.
       required:
       - balance
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
+    TimeOffRequest:
+      allOf:
+      - $ref: '#/components/schemas/TimeOffRequestInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          status:
+            type: string
     TimeOffRequestInput:
       type: object
       properties:
@@ -192,6 +185,20 @@ components:
       - timeOffTypeId
       - from
       - to
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
   parameters:
     EmployeeId:
       name: employeeId
@@ -200,13 +207,6 @@ components:
       schema:
         type: string
       description: The unique identifier of the employee.
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
