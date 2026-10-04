@@ -131,24 +131,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    TimeOffRequestList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     BalanceInput:
       type: object
       properties:
@@ -157,15 +140,13 @@ components:
           description: The balance value to set for the time-off type.
       required:
       - balance
-    TimeOffRequest:
-      allOf:
-      - $ref: '#/components/schemas/TimeOffRequestInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          status:
-            type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     TimeOffRequestInput:
       type: object
       properties:
@@ -199,6 +180,25 @@ components:
           type: integer
         total:
           type: integer
+    TimeOffRequest:
+      allOf:
+      - $ref: '#/components/schemas/TimeOffRequestInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          status:
+            type: string
+    TimeOffRequestList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     EmployeeId:
       name: employeeId

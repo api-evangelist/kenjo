@@ -177,30 +177,6 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
-    Attendance:
-      allOf:
-      - $ref: '#/components/schemas/AttendanceInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-    AttendanceList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
     Error:
       type: object
       properties:
@@ -208,21 +184,6 @@ components:
           type: string
         message:
           type: string
-    TrackTimeInput:
-      type: object
-      properties:
-        userId:
-          type: string
-        email:
-          type: string
-          format: email
-        externalId:
-          type: string
-        dateTime:
-          type: string
-          format: date-time
-      required:
-      - dateTime
     AttendanceInput:
       type: object
       properties:
@@ -244,6 +205,45 @@ components:
           format: date-time
         category:
           type: string
+    Attendance:
+      allOf:
+      - $ref: '#/components/schemas/AttendanceInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    AttendanceList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    TrackTimeInput:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+          format: email
+        externalId:
+          type: string
+        dateTime:
+          type: string
+          format: date-time
+      required:
+      - dateTime
   responses:
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.
@@ -258,14 +258,6 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
-    Page:
-      name: page
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-      description: Zero-based page index for paginated results.
     AttendanceId:
       name: attendanceId
       in: path
@@ -281,6 +273,14 @@ components:
         type: integer
         minimum: 1
       description: Number of items to return per page.
+    Page:
+      name: page
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+      description: Zero-based page index for paginated results.
   securitySchemes:
     bearerAuth:
       type: http

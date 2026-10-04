@@ -402,15 +402,17 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Employee:
-      allOf:
-      - $ref: '#/components/schemas/EmployeeInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          active:
-            type: boolean
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Section:
+      type: object
+      additionalProperties: true
+      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
     GenericList:
       type: object
       properties:
@@ -428,17 +430,22 @@ components:
     EmployeeAccountList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
+    Employee:
+      allOf:
+      - $ref: '#/components/schemas/EmployeeInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          active:
+            type: boolean
     EmployeeList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     SectionList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    UserAccountList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
     EmployeeInput:
@@ -457,13 +464,6 @@ components:
           type: string
       required:
       - email
-    UserAccountList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    Section:
-      type: object
-      additionalProperties: true
-      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
   responses:
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.
@@ -478,6 +478,14 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   parameters:
+    Limit:
+      name: limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+      description: Number of items to return per page.
     Page:
       name: page
       in: query
@@ -493,14 +501,6 @@ components:
       schema:
         type: string
       description: The unique identifier of the employee.
-    Limit:
-      name: limit
-      in: query
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-      description: Number of items to return per page.
   securitySchemes:
     bearerAuth:
       type: http
