@@ -38,6 +38,9 @@ accessModel:
   generated: '2026-07-22'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/kenjo.png
+x-docs-platform: readme
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-10-03
 tags:
 - Human Resources
 - HRIS
@@ -316,6 +319,9 @@ apis:
   - type: APIReference
     url: https://kenjo.readme.io/reference/get_recruiting-positions
 common:
+- type: CapabilityMap
+  url: capabilities/kenjo-capability-edges.yml
+  name: Kenjo Business Capability Map
 - type: AgenticAccess
   url: agentic-access/kenjo-agentic-access.yml
 - type: LinkedIn
