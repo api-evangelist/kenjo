@@ -1,0 +1,63 @@
+slug: kenjo
+provider: Kenjo
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Recruiting
+  spec_file: kenjo-recruiting-api-openapi.yml
+  capability_id: BC-300.10
+  capability_id_l1: BC-300
+  capability_name: Talent Acquisition Management
+  confidence: 0.95
+  evidence: GET /recruiting/positions  List job positions; POST /recruiting/candidates  Create a candidate;
+    POST .../applications/position/{positionId}/candidate/{candidateId}  Create an application
+  reason: Job positions, candidates and applications are unambiguously applicant tracking / talent acquisition.
+- tag: Compensation
+  spec_file: kenjo-compensation-api-openapi.yml
+  capability_id: BC-300.30
+  capability_id_l1: BC-300
+  capability_name: Compensation & Benefits Management
+  confidence: 0.9
+  evidence: GET /compensation/salaries  listSalaries  List salaries; GET /compensation/additional-payments  listAdditionalPayments
+  reason: Salaries, contracts and additional payment types are pay structure and benefits administration
+    — Compensation & Benefits Management.
+- tag: Employees
+  spec_file: kenjo-employees-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.9
+  evidence: GET /employees/personals  List employee personal information; GET /employees/addresses; GET
+    /employees/financials; schema Employee, EmployeeList
+  reason: CRUD and read access over the employee master record (personal, work, address, financial, emergency-contact
+    sections) is core HR employee-records administration.
+- tag: Attendance
+  spec_file: kenjo-attendance-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.8
+  evidence: POST /attendances/track-time  trackTime  Track an attendance entry; GET /attendances/expected-time  listExpectedTime  List
+    expected time per user
+  reason: Employee time and attendance tracking in an HRIS is HR operations/time administration.
+- tag: Time Off
+  spec_file: kenjo-time-off-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.7
+  evidence: POST /time-off-requests  createTimeOffRequest; PUT /time-off/set-balance/{timeOffTypeId}/{employeeId}  Set
+    a time-off balance
+  reason: Absence/leave request and balance administration is an HR operations/service-delivery function
+    within the employee lifecycle; could arguably sit under benefits administration, hence moderate confidence
+    on the L2.
