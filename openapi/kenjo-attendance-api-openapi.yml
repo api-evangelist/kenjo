@@ -176,14 +176,20 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
     AttendanceInput:
       type: object
       properties:
@@ -205,13 +211,6 @@ components:
           format: date-time
         category:
           type: string
-    Attendance:
-      allOf:
-      - $ref: '#/components/schemas/AttendanceInput'
-      - type: object
-        properties:
-          _id:
-            type: string
     GenericList:
       type: object
       properties:
@@ -226,6 +225,13 @@ components:
           type: integer
         total:
           type: integer
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
     AttendanceList:
       allOf:
       - $ref: '#/components/schemas/GenericList'
@@ -244,27 +250,14 @@ components:
           format: date-time
       required:
       - dateTime
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Attendance:
+      allOf:
+      - $ref: '#/components/schemas/AttendanceInput'
+      - type: object
+        properties:
+          _id:
+            type: string
   parameters:
-    AttendanceId:
-      name: attendanceId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The unique identifier of the attendance entry.
     Limit:
       name: limit
       in: query
@@ -281,6 +274,13 @@ components:
         type: integer
         minimum: 0
       description: Zero-based page index for paginated results.
+    AttendanceId:
+      name: attendanceId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The unique identifier of the attendance entry.
   securitySchemes:
     bearerAuth:
       type: http

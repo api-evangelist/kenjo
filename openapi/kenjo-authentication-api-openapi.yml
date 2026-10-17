@@ -54,20 +54,14 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or expired.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    LoginResponse:
+    Error:
       type: object
       properties:
-        token:
+        code:
           type: string
-          description: Bearer token to send in the Authorization header.
+        message:
+          type: string
     LoginRequest:
       type: object
       required:
@@ -76,13 +70,19 @@ components:
         apiKey:
           type: string
           description: The API key generated in Settings > Integrations > API.
-    Error:
+    LoginResponse:
       type: object
       properties:
-        code:
+        token:
           type: string
-        message:
-          type: string
+          description: Bearer token to send in the Authorization header.
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or expired.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

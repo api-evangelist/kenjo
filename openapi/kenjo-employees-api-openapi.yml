@@ -401,69 +401,6 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  schemas:
-    Error:
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-    Section:
-      type: object
-      additionalProperties: true
-      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
-    GenericList:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-        page:
-          type: integer
-        limit:
-          type: integer
-        total:
-          type: integer
-    EmployeeAccountList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    Employee:
-      allOf:
-      - $ref: '#/components/schemas/EmployeeInput'
-      - type: object
-        properties:
-          _id:
-            type: string
-          active:
-            type: boolean
-    EmployeeList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    SectionList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    UserAccountList:
-      allOf:
-      - $ref: '#/components/schemas/GenericList'
-    EmployeeInput:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        firstName:
-          type: string
-        lastName:
-          type: string
-        externalId:
-          type: string
-        language:
-          type: string
-      required:
-      - email
   responses:
     Unauthorized:
       description: The bearer token is missing, invalid, or expired.
@@ -501,6 +438,69 @@ components:
       schema:
         type: string
       description: The unique identifier of the employee.
+  schemas:
+    GenericList:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+    EmployeeInput:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        externalId:
+          type: string
+        language:
+          type: string
+      required:
+      - email
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    UserAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    Section:
+      type: object
+      additionalProperties: true
+      description: A profile section payload. Field set varies by section (account, personal, work, etc.).
+    Employee:
+      allOf:
+      - $ref: '#/components/schemas/EmployeeInput'
+      - type: object
+        properties:
+          _id:
+            type: string
+          active:
+            type: boolean
+    EmployeeList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    EmployeeAccountList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
+    SectionList:
+      allOf:
+      - $ref: '#/components/schemas/GenericList'
   securitySchemes:
     bearerAuth:
       type: http
