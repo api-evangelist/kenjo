@@ -1,4 +1,4 @@
-# Kenjo (kenjo)
+# Kenjo
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,107 +64,124 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kenjo is an all-in-one human resources (HRIS) software platform for small and mid-sized companies, with a particular focus on deskless and shift-based teams. It covers the full employee lifecycle: employee database, attendance and time tracking, absence and time-off management, document management, payroll and compensation, shift planning, performance reviews, and recruiting. Kenjo is based in Germany and Spain and serves 1,000+ companies.
+Kenjo is an all-in-one human resources (HRIS) software platform for small and mid-sized companies, with a strong focus on deskless and shift-based teams. It covers the full employee lifecycle - employee database, attendance and time tracking, absence and time-off management, document management, payroll and compensation, shift planning, performance reviews, and recruiting. Kenjo exposes a documented REST API (base https://api.kenjo.io/api/v1, sandbox https://sandbox-api.kenjo.io/api/v1) that lets customers read and write employees, attendances, time-off requests, company documents, compensation, org structure, and recruiting data. API access is gated - it is available on Kenjo's top-tier Connect plan and must be activated by the Kenjo Customer Success team, then keys are generated in Settings > Integrations > API and exchanged for a bearer token.
 
-Kenjo exposes a documented REST API for reading and writing HR data. **Access is gated:** the API is available on Kenjo's top-tier **Connect** plan and must first be activated for your account (sandbox or production) by the Kenjo Customer Success team. You then generate an API key in the Kenjo web app under **Settings > Integrations > API**, exchange it for a bearer token via `POST /auth/login`, and send that token in the `Authorization` header on every request.
+**Areas:** Human Resources · HRIS · Employee Management · HR Software · Time Tracking · Absence Management · Payroll · Recruiting
 
-- **Production base URL:** `https://api.kenjo.io/api/v1`
-- **Sandbox base URL:** `https://sandbox-api.kenjo.io/api/v1`
-- **Authentication:** Bearer token (API key exchanged via `POST /auth/login`)
-- **API reference:** [https://kenjo.readme.io/reference](https://kenjo.readme.io/reference)
+## Kenjo on APIs.io
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/kenjo/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/kenjo/refs/heads/main/apis.yml)
+Everything profiled for Kenjo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kenjo/](https://apis.io/providers/kenjo/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- Human Resources
-- HRIS
-- Employee Management
-- HR Software
-- Time Tracking
-- Absence Management
-- Payroll
-- Recruiting
+- [Kenjo Attendance API](https://apis.io/apis/kenjo/kenjo-attendance-api/) — Attendance and time-tracking entries.
+- [Kenjo Authentication API](https://apis.io/apis/kenjo/kenjo-authentication-api/) — Exchange an API key for a bearer token and invalidate tokens.
+- [Kenjo Compensation API](https://apis.io/apis/kenjo/kenjo-compensation-api/) — Contracts, salaries, and additional payments.
+- [Kenjo Documents API](https://apis.io/apis/kenjo/kenjo-documents-api/) — Company documents.
+- [Kenjo Employees API](https://apis.io/apis/kenjo/kenjo-employees-api/) — Employee records and their profile sections.
+- [Kenjo Organization API](https://apis.io/apis/kenjo/kenjo-organization-api/) — Companies, offices, departments, teams, areas, and calendars.
+- [Kenjo Recruiting API](https://apis.io/apis/kenjo/kenjo-recruiting-api/) — Positions, candidates, and applications.
+- [Kenjo Time Off API](https://apis.io/apis/kenjo/kenjo-time-off-api/) — Absences, time-off requests, types, statuses, and balances.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-07-11
-- **Modified:** 2026-07-11
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Kenjo Employees API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Create, list, and read employees and update their profile sections - account, personal, work, work schedule, address, financial, home, and emergency contact - plus activate and deactivate employees. New employees are created deactivated by default. The core HRIS surface for keeping an external system of record in sync with Kenjo.
+- [Kenjo Agentic Access](https://apis.io/agentic-access/kenjo/kenjo-agentic-access/)
 
-- **API Reference:** [https://kenjo.readme.io/reference/post_employees](https://kenjo.readme.io/reference/post_employees)
-- **Base URL:** `https://api.kenjo.io/api/v1`
+#### Collections (9)
 
-### Kenjo Attendance API
+Postman and Open Collection request collections.
 
-Record and manage attendance and time tracking - create, retrieve, update, and delete attendance entries, track a clock-in/clock-out by user email or external id, list attendance categories, and return expected working time per user for a date range. Built for deskless and shift-based workforce time capture.
+- [Kenjo API](https://apis.io/collections/kenjo/open-kenjo/)
+- [Kenjo Attendance API](https://apis.io/collections/kenjo/open-kenjo-attendance-api/)
+- [Kenjo Attendance Authentication API](https://apis.io/collections/kenjo/open-kenjo-authentication-api/)
+- [Kenjo Attendance Compensation API](https://apis.io/collections/kenjo/open-kenjo-compensation-api/)
+- [Kenjo Attendance Documents API](https://apis.io/collections/kenjo/open-kenjo-documents-api/)
+- [Kenjo Attendance Employees API](https://apis.io/collections/kenjo/open-kenjo-employees-api/)
+- [Kenjo Attendance Organization API](https://apis.io/collections/kenjo/open-kenjo-organization-api/)
+- [Kenjo Attendance Recruiting API](https://apis.io/collections/kenjo/open-kenjo-recruiting-api/)
+- [Kenjo Attendance Time Off API](https://apis.io/collections/kenjo/open-kenjo-time-off-api/)
 
-- **API Reference:** [https://kenjo.readme.io/reference/post_attendances](https://kenjo.readme.io/reference/post_attendances)
-- **Base URL:** `https://api.kenjo.io/api/v1`
+#### Plans and pricing (1)
 
-### Kenjo Time Off and Absences API
+Published plans, tiers and prices.
 
-Manage absences and time off - create time-off requests, create pre-approved (processed) requests, list requests, list time-off types and statuses, and set an employee's balance for a given time-off type.
+- [Kenjo Plans Pricing](https://apis.io/plans/kenjo/kenjo-plans-pricing/)
 
-- **API Reference:** [https://kenjo.readme.io/reference/post_time-off-requests](https://kenjo.readme.io/reference/post_time-off-requests)
-- **Base URL:** `https://api.kenjo.io/api/v1`
+#### Rate limits (1)
 
-### Kenjo Documents API
+Published request limits.
 
-Return a paginated list of company documents stored in Kenjo.
+- [Kenjo Rate Limits](https://apis.io/rate-limits/kenjo/kenjo-rate-limits/)
 
-- **API Reference:** [https://kenjo.readme.io/reference/get_documents-company](https://kenjo.readme.io/reference/get_documents-company)
-- **Base URL:** `https://api.kenjo.io/api/v1`
+#### FinOps (1)
 
-### Kenjo Compensation and Payroll API
+What the API costs to run, by operation.
 
-Read compensation and payroll-adjacent data - contracts, contract types, salaries, additional payments, and additional payment types - to feed payroll runs and compensation reporting.
+- [Kenjo Finops](https://apis.io/finops/kenjo/kenjo-finops/)
 
-- **API Reference:** [https://kenjo.readme.io/reference/get_compensation-contracts](https://kenjo.readme.io/reference/get_compensation-contracts)
-- **Base URL:** `https://api.kenjo.io/api/v1`
+## Where to find this API
 
-### Kenjo Organization API
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-Manage the organizational structure behind the HRIS - companies, offices, departments, teams, areas, and calendars - with full CRUD on offices, departments, teams, and areas.
-
-- **API Reference:** [https://kenjo.readme.io/reference/get_companies](https://kenjo.readme.io/reference/get_companies)
-- **Base URL:** `https://api.kenjo.io/api/v1`
-
-### Kenjo Recruiting API
-
-Applicant tracking surface - list public job positions, create and manage candidates and their attachments and documents, and create and update applications tying a candidate to a position. Also powers custom career sites built on top of Kenjo's public positions endpoint.
-
-- **API Reference:** [https://kenjo.readme.io/reference/get_recruiting-positions](https://kenjo.readme.io/reference/get_recruiting-positions)
-- **Base URL:** `https://api.kenjo.io/api/v1`
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/kenjohr)
 - [Website](https://www.kenjo.io/)
 - [Documentation](https://kenjo.readme.io/reference)
-- [Support Email](mailto:support@kenjo.io)
-- [Plans](plans/kenjo-plans-pricing.yml)
-- [Rate Limits](rate-limits/kenjo-rate-limits.yml)
-- [Fin Ops](finops/kenjo-finops.yml)
 - [Blog](https://www.kenjo.io/blog)
 
-## Access Model
+## API Evangelist rating
 
-The Kenjo API is not open self-service. To use it you must:
+**Kin Score 25.4** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-1. Be on the **Connect** plan (Kenjo's top tier; APIs and integrations are a Connect-only capability).
-2. Request API activation from the Kenjo Customer Success team for your sandbox and/or production account.
-3. Generate an API key in **Settings > Integrations > API** (each key needs a unique alias; copy it immediately, it is shown once).
-4. Call `POST /auth/login` with the API key to obtain a bearer token, then authorize all calls with that token.
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 51.5 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 20.2 |
+| Access clarity | 7.9 |
 
-A test/sandbox environment (`https://sandbox-api.kenjo.io/api/v1`) is provided and recommended before enabling the integration against production data.
+**Agent readiness 17.9** — agent-aware
 
-## Maintainers
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Regulatory alignment 0.0** — Employment & Payroll
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kenjo/](https://apis.io/providers/kenjo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kenjo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kenjo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
